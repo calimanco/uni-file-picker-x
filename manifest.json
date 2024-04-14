@@ -41,7 +41,13 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "read",
+                    "NSPhotoLibraryAddUsageDescription" : "write",
+                    "NSCameraUsageDescription" : "camera"
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {}
         }

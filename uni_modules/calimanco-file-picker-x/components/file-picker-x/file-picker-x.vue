@@ -1,6 +1,6 @@
 <template>
-	<view class="filePickerX" :change:prop="filePickerXRenderjs.ready" :prop="{ accept, capture, multiple }">
-		<slot><button>附件上传</button></slot>
+	<view class="filePickerX" :change:prop="filePickerXRenderjs.ready" :prop="{ accept, capture, multiple, disabled }">
+		<slot><button :disabled="disabled">附件上传</button></slot>
 	</view>
 </template>
 
@@ -8,9 +8,10 @@
 export default {
 	name: 'filePickerX',
 	props: {
-		accept: { type: String, default: '*' },
-		capture: { type: Boolean, defalut: false },
+		accept: { type: String, default: '' },
+		capture: { type: String, defalut: 'environment' },
 		multiple: { type: Boolean, defalut: false },
+		disabled: { type: Boolean, defalut: false }
 	},
 	mounted() {
 		// #ifdef H5
@@ -18,7 +19,8 @@ export default {
 			accept: this.accept,
 			capture: this.capture,
 			multiple: this.multiple,
-		})
+			disabled: this.disabled
+		});
 		// #endif
 	},
 	methods: {
@@ -51,10 +53,15 @@ import { transformArrayBufferToBase64 } from '../../utils'
 
 export default {
   methods: {
+		data() {
+			return {
+				inputDom: null
+			}
+		},
 		ready(params) {
 			setTimeout(() => {
 				this.init(params)
-			})
+			}, 10)
 		},
     init(params) {
       const dom = this.$ownerInstance.$el
@@ -63,12 +70,16 @@ export default {
 				this.$ownerInstance.callMethod('handleError', 'can not find dom')
         return
       }
+			if (this.inputDom) {
+				dom.removeChild(this.inputDom)
+			}
       const inputDom = document.createElement('input')
       inputDom.type = 'file'
       inputDom.className += 'filePickerX-input'
       inputDom.accept = params.accept
       inputDom.capture = params.capture
 			inputDom.multiple = params.multiple
+			inputDom.disabled = params.disabled
       inputDom.setAttribute(key, '')
       inputDom.onchange = e => {
         e.stopPropagation()
@@ -100,6 +111,7 @@ export default {
           e.target.value = ''
         }, 10)
       }
+			this.inputDom = inputDom
       dom.appendChild(inputDom)
     },
     async processFile(file) {
