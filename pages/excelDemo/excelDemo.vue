@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<file-picker-x type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" @change="handleChange">
+		<file-picker-x accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" @change="handleChange">
 			<button type="primary">上传Excel</button>
 		</file-picker-x>
 	</view>

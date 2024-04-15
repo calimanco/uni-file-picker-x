@@ -32,8 +32,8 @@
 				<switch :checked="disabled" @change="handleDisabledChange" />
 			</view>
 		</view>
-		<file-picker-x type="image/*" :multiple="multiple" :capture="capture" :disabled="disabled" @change="handleChange">
-			<button type="primary" :disabled="disabled">上传图片</button>
+		<file-picker-x accept="image/*" :multiple="multiple" :capture="capture" :disabled="disabled" @success="handleSuccess" @process="handleProcess">
+			<button type="primary" :disabled="disabled">选择图片</button>
 		</file-picker-x>
 	</view>
 </template>
@@ -49,17 +49,23 @@ export default {
 		};
 	},
 	methods: {
-		async handleChange(res) {
+		handleProcess(res) {
+			uni.showLoading({
+				title: '正在加载'
+			});
+		},
+		async handleSuccess(res) {
+			uni.hideLoading()
 			this.imgList = res.map((i) => i.base64);
 		},
 		handleMultipleChange(res) {
-			this.multiple = res.detail.value
+			this.multiple = res.detail.value;
 		},
 		handleCaptureChange(res) {
-			this.capture = res.detail.value ? 'user' : 'environment'
+			this.capture = res.detail.value ? 'user' : 'environment';
 		},
 		handleDisabledChange(res) {
-			this.disabled = res.detail.value
+			this.disabled = res.detail.value;
 		}
 	}
 };

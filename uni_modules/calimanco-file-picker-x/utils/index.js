@@ -9,3 +9,14 @@ export function transformArrayBufferToBase64(buffer) {
   }
   return window.btoa(binary);
 }
+
+/**
+ * 复杂实例转基本对象（renderjs专用）
+ */
+export function transformInstanceToObject(instance) {
+	const obj = {}
+	for(const key in instance){
+		obj[key] = instance[key]
+	}
+	return obj
+}
