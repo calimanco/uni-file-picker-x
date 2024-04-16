@@ -9,7 +9,9 @@ export default {
 	name: 'filePickerX',
 	data() {
 		return {
-			fileList: []
+			fileList: [],
+			hasLoadstart: false,
+			loadendCount: 0
 		};
 	},
 	props: {
@@ -30,8 +32,16 @@ export default {
 	},
 	methods: {
 		handleChange(res) {
-			this.fileList = res;
-			this.$emit('change', res);
+			this.fileList = res.map((i) => {
+				return {
+					...i,
+					loaded: 0,
+					total: i.size
+				};
+			});
+			this.hasLoadstart = false;
+			this.loadendCount = 0;
+			this.$emit('change', this.fileList);
 		},
 		handleEvent(res) {
 			this.fileList = this.fileList.map((i) => {
@@ -44,6 +54,18 @@ export default {
 				}
 				return i;
 			});
+			if (res.eventType === 'loadstart') {
+				if (this.hasLoadstart === true) {
+					return;
+				}
+				this.hasLoadstart = true;
+			}
+			if (res.eventType === 'loadend') {
+				this.loadendCount += 1;
+				if (this.loadendCount !== this.fileList.length) {
+					return;
+				}
+			}
 			this.$emit(res.eventType, this.fileList);
 		},
 		handleError(errMsg) {
@@ -78,7 +100,7 @@ export default {
 </script>
 
 <script module="filePickerXRenderjs" lang="renderjs">
-import { transformArrayBufferToBase64, transformInstanceToObject } from '../../utils';
+import { transformArrayBufferToBase64 } from '../../utils';
 
 export default {
 	methods: {
