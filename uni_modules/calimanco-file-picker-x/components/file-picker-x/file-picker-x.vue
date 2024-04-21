@@ -15,20 +15,10 @@ export default {
 		};
 	},
 	props: {
-		accept: { type: String, default: '' },
+		accept: { type: String, default: '*' },
 		capture: { type: String, defalut: 'environment' },
 		multiple: { type: Boolean, defalut: false },
 		disabled: { type: Boolean, defalut: false }
-	},
-	mounted() {
-		// #ifdef H5
-		this.filePickerXRenderjs.ready({
-			accept: this.accept,
-			capture: this.capture,
-			multiple: this.multiple,
-			disabled: this.disabled
-		});
-		// #endif
 	},
 	methods: {
 		handleChange(res) {
@@ -115,6 +105,7 @@ export default {
 			}, 10);
 		},
 		init(params) {
+			console.log('init', params)
 			const dom = this.$ownerInstance.$el;
 			const key = dom.getAttributeNames().find((i) => i.match(/^data-v-.*/));
 			if (!dom) {

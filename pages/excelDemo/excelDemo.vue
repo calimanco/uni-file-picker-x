@@ -43,7 +43,6 @@ export default {
 					result.push(sheet);
 				});
 				this.excelJSON = JSON.stringify(result, null, 2);
-				console.log(result);
 			} catch (err) {
 				console.log(err);
 			}
