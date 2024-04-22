@@ -36,7 +36,7 @@
 				<switch :checked="disabled" @change="handleDisabledChange" />
 			</view>
 		</view>
-		<file-picker-x
+		<calimanco-file-picker-x
 			accept="image/*"
 			:multiple="multiple"
 			:capture="capture"
@@ -49,7 +49,7 @@
 			@progress="handleProgress"
 		>
 			<button type="primary" :disabled="disabled">选择图片</button>
-		</file-picker-x>
+		</calimanco-file-picker-x>
 	</view>
 </template>
 
