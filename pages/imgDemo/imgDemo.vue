@@ -41,6 +41,7 @@
 			:multiple="multiple"
 			:capture="capture"
 			:disabled="disabled"
+			@change="handleChange"
 			@success="handleSuccess"
 			@fail="handleFail"
 			@loadstart="handleLoadstart"
@@ -63,6 +64,9 @@ export default {
 		};
 	},
 	methods: {
+		handleChange(res) {
+			console.log('change', res);
+		},
 		handleLoadstart(res) {
 			console.log('loadstart', res);
 			uni.showLoading({
