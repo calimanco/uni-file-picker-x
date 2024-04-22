@@ -3,9 +3,12 @@
 		<view class="json">
 			<text space="nbsp">{{ excelJSON }}</text>
 		</view>
-		<file-picker-x accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" @success="handleChange" @loadstart="handleLoadstart" @loadend="handleLoadend">
-			<button type="primary">选择Excel</button>
-		</file-picker-x>
+		<file-picker-x
+			accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+			@success="handleChange"
+			@loadstart="handleLoadstart"
+			@loadend="handleLoadend"
+		></file-picker-x>
 	</view>
 </template>
 

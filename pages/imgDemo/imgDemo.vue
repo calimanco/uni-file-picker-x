@@ -42,6 +42,7 @@
 			:capture="capture"
 			:disabled="disabled"
 			@success="handleSuccess"
+			@fail="handleFail"
 			@loadstart="handleLoadstart"
 			@loadend="handleLoadend"
 			@progress="handleProgress"
@@ -62,19 +63,26 @@ export default {
 		};
 	},
 	methods: {
-		handleLoadstart() {
+		handleLoadstart(res) {
+			console.log('loadstart', res);
 			uni.showLoading({
 				title: '正在加载'
 			});
 		},
 		handleProgress(res) {
+			console.log('progress', res);
 			this.imgList = res;
 		},
-		handleLoadend() {
+		handleLoadend(res) {
+			console.log('loadend', res);
 			uni.hideLoading();
 		},
-		async handleSuccess(res) {
+		handleSuccess(res) {
+			console.log('success', res);
 			this.imgList = res;
+		},
+		handleFail(err) {
+			console.log('faile', err);
 		},
 		handleMultipleChange(res) {
 			this.multiple = res.detail.value;
@@ -123,7 +131,7 @@ export default {
 		background-color: #fff;
 	}
 }
-.process {
+.progress {
 	position: absolute;
 	display: block;
 	top: 0;

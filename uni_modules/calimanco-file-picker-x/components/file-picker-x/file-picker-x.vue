@@ -1,6 +1,6 @@
 <template>
 	<view class="filePickerX" :change:prop="filePickerXRenderjs.ready" :prop="{ accept, capture, multiple, disabled }">
-		<slot><button :disabled="disabled">附件上传</button></slot>
+		<slot><button :disabled="disabled">附件选择</button></slot>
 	</view>
 </template>
 
@@ -73,16 +73,6 @@ export default {
 				this.$emit('success', result);
 			} catch (err) {
 				this.$emit('fail', err.message);
-			} finally {
-				this.$emit(
-					'complete',
-					res.map((i) => {
-						return {
-							...i,
-							base64: ''
-						};
-					})
-				);
 			}
 		}
 	}
@@ -105,7 +95,6 @@ export default {
 			}, 10);
 		},
 		init(params) {
-			console.log('init', params)
 			const dom = this.$ownerInstance.$el;
 			const key = dom.getAttributeNames().find((i) => i.match(/^data-v-.*/));
 			if (!dom) {
